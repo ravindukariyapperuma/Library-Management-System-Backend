@@ -33,4 +33,16 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Book", "Id", id));
     }
+
+    @Override
+    public Book updateBook(Book book, long id) {
+        Book existingBook = bookRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Book", "Id", id)
+        );
+        existingBook.setBookName(book.getBookName());
+        existingBook.setAuthor(book.getAuthor());
+
+        bookRepository.save(existingBook);
+        return existingBook;
+    }
 }
