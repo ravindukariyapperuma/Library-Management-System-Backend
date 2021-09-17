@@ -45,4 +45,11 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(existingBook);
         return existingBook;
     }
+
+    @Override
+    public void deleteBook(long id) {
+        bookRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Book", "Id", id));
+        bookRepository.deleteById(id);
+    }
 }
