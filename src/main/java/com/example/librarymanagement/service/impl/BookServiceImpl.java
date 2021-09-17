@@ -1,5 +1,6 @@
 package com.example.librarymanagement.service.impl;
 
+import com.example.librarymanagement.exception.ResourceNotFoundException;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.repository.BookRepository;
 import com.example.librarymanagement.service.BookService;
@@ -25,5 +26,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    @Override
+    public Book getBookById(long id) {
+        return bookRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Book", "Id", id));
     }
 }
